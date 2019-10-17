@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import items from './data';
+// import items from './data';
+import Client from './Contentful';
+
+// Client.getEntries({
+//     content_type: 'beachResortRoom'
+//     })
+//     .then((response) => console.log(response.items))
+//     .catch(console.error);
 
 const RoomContext = React.createContext();
 
@@ -19,19 +26,44 @@ const RoomProvider = (props) => {
     const [pets, setPets] = useState(false);
 
     // getData()
+    const getData = async () => {
+        try {
+            let response = await Client.getEntries({
+                content_type: 'beachResortRoom',
+                // order: 'sys.createdAt'
+                order: 'fields.price'
+            });
+            let rooms = formatData(response.items);
+            let featuredRooms = rooms.filter(room => room.featured === true);
+            let maxPrice = Math.max(...rooms.map(item => item.price));
+            let maxSize = Math.max(...rooms.map(item => item.size));
+            setRooms(rooms);
+            setFeaturedRooms(featuredRooms);
+            setSortedRooms(rooms);
+            setLoading(false);
+            setPrice(maxPrice);
+            setMaxPrice(maxPrice);
+            setMaxSize(maxSize);
+        } catch (error) {
+            console.log('[context.js]', error);
+        }
+    };
 
+    // useEffect(() => {
+    //     let rooms = formatData(items);
+    //     let featuredRooms = rooms.filter(room => room.featured === true);
+    //     let maxPrice = Math.max(...rooms.map(item => item.price));
+    //     let maxSize = Math.max(...rooms.map(item => item.size));
+    //     setRooms(rooms);
+    //     setFeaturedRooms(featuredRooms);
+    //     setSortedRooms(rooms);
+    //     setLoading(false);
+    //     setPrice(maxPrice);
+    //     setMaxPrice(maxPrice);
+    //     setMaxSize(maxSize);
+    // }, []);
     useEffect(() => {
-        let rooms = formatData(items);
-        let featuredRooms = rooms.filter(room => room.featured === true);
-        let maxPrice = Math.max(...rooms.map(item => item.price));
-        let maxSize = Math.max(...rooms.map(item => item.size));
-        setRooms(rooms);
-        setFeaturedRooms(featuredRooms);
-        setSortedRooms(rooms);
-        setLoading(false);
-        setPrice(maxPrice);
-        setMaxPrice(maxPrice);
-        setMaxSize(maxSize);
+        getData();
     }, []);
 
     useEffect(() => {

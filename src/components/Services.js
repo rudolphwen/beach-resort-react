@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { FaCocktail, FaHiking, FaShuttleVan, FaBeer } from 'react-icons/fa';
 
 import Title from './Title';
 
 const Services = () => {
-    const [services, setServices] = useState([
+    const [services] = useState([
         {
             icon: <FaCocktail />,
             title: 'free cocktails',

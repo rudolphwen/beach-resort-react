@@ -1,36 +1,37 @@
-import React, { useContext, useEffect, useState, Fragment } from 'react';
+import React, { useContext, useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import defaultBcg from '../images/room-1.jpeg';
-import Hero from '../components/Hero';
+// import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import { RoomContext } from '../context';
 import StyledHero from '../components/StyledHero';
 
 const SingleRoom = (props) => {
-    console.log(props);
+    // console.log(props);
     const { getRoom } = useContext(RoomContext);
-    const [slug, setSlug] = useState(props.match.params.slug);
-    const [defaultBcgImg, setDefaultBcgImg] = useState(defaultBcg);
+    // const [slug, setSlug] = useState(props.match.params.slug);
+    const [slug] = useState(props.match.params.slug);
+    const [defaultBcgImg] = useState(defaultBcg);
 
     const room = getRoom(slug);
 
-    console.log('[slug]', slug);
-    console.log('[room 1]', room);
+    // console.log('[slug]', slug);
+    // console.log('[room 1]', room);
 
-    const testString = 'this is a breakpoint';
+    // const testString = 'this is a breakpoint';
 
-    console.log('hello', testString);
+    // console.log('hello', testString);
 
-    if (testString !== 'work') {
-        console.log('this can be reached');
-    }
+    // if (testString !== 'work') {
+    //     console.log('this can be reached');
+    // }
 
-    console.log('how about this');
+    // console.log('how about this');
 
-    if(!slug) {
-        return <h1>not a slug</h1>
-    }
+    // if(!slug) {
+    //     return <h1>not a slug</h1>
+    // }
 
     if(!room) {
         return (
@@ -43,12 +44,12 @@ const SingleRoom = (props) => {
         );
     }
 
-    console.log('[room 2]', room);
+    // console.log('[room 2]', room);
 
     const { name, description, capacity, size, price, extras, breakfast, pets, images } = room;
     // const [mainImg, img1, img2] = images;
     const [mainImg, ...defaultImg] = images;
-    console.log(defaultImg);
+    // console.log(defaultImg);
         
     return (
         <Fragment>
